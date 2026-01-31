@@ -9,6 +9,7 @@ import logging
 import sys
 from pathlib import Path
 from datetime import datetime
+from typing import List, Dict, Any
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent / 'src'))
@@ -426,5 +427,4 @@ def main():
 
 
 if __name__ == "__main__":
-    from typing import List
     main()

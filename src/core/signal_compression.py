@@ -3,7 +3,6 @@ Signal Compression Module
 Efficiently compresses and prioritizes data signals for AI processing
 """
 
-import numpy as np
 from typing import List, Dict, Any, Tuple
 import logging
 
