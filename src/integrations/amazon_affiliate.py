@@ -96,7 +96,7 @@ class AmazonAffiliate:
                     asin = url_or_asin[start:start+10]
                     if asin.isalnum():
                         return asin
-                except:
+                except (ValueError, IndexError):
                     continue
         
         return None

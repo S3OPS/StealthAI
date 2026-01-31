@@ -90,7 +90,7 @@ class YouTubeAutomation:
         
         # Add hashtags (3-5 is optimal)
         hashtags = [f"#{kw.replace(' ', '')}" for kw in keywords[:5]]
-        if not any('#' in optimized for _ in range(3)):
+        if optimized.count('#') < 3:
             optimized += f"\n\n{' '.join(hashtags)}"
         
         # Add call to action

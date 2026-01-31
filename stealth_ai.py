@@ -209,7 +209,7 @@ class StealthAI:
             products = products_per_topic.get(topic, [])
             
             task = MicroTask(
-                id=f"content_{idx}_{topic[:20]}",
+                id=f"content_{idx}_{hash(topic) % 100000}",
                 function=self.generate_faceless_content,
                 args=(topic, keywords, products),
                 kwargs={},

@@ -54,7 +54,7 @@ class AIEngine:
                 if fallback != model:
                     try:
                         return self._call_ollama(prompt, fallback, max_length)
-                    except:
+                    except Exception:
                         continue
             
             # If all fails, return a basic template
