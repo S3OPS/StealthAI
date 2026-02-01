@@ -1,0 +1,16 @@
+{
+  "OL32-8ARE-ON1F-EICK": {
+    "key": "OL32-8ARE-ON1F-EICK",
+    "plan": "pro",
+    "email": "test@example.com",
+    "payment_id": "test-payment-123",
+    "created_at": "2026-02-01T05:26:55.908488",
+    "expires_at": "2026-03-03T05:26:55.908488",
+    "status": "active",
+    "activations": [
+      "B786E0AA6360EDA0"
+    ],
+    "max_activations": 3,
+    "last_activated": "2026-02-01T05:26:55.918501"
+  }
+}
