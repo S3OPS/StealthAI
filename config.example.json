@@ -1,0 +1,45 @@
+{
+  "amazon_affiliate": {
+    "tracking_id": "your-affiliate-id-20",
+    "access_key": "YOUR_ACCESS_KEY",
+    "secret_key": "YOUR_SECRET_KEY",
+    "region": "US"
+  },
+  "youtube": {
+    "api_key": "YOUR_YOUTUBE_API_KEY",
+    "client_secrets_file": "client_secrets.json",
+    "channel_id": "YOUR_CHANNEL_ID"
+  },
+  "ai_tools": {
+    "ollama_endpoint": "http://localhost:11434",
+    "default_model": "llama2",
+    "fallback_models": ["mistral", "neural-chat"]
+  },
+  "signal_compression": {
+    "compression_ratio": 0.3,
+    "signal_threshold": 0.7,
+    "batch_size": 10
+  },
+  "micro_stacking": {
+    "max_stack_depth": 5,
+    "parallel_tasks": 3,
+    "task_timeout": 300
+  },
+  "revenue_targets": {
+    "quick_target": 310,
+    "main_target": 8700
+  },
+  "payment": {
+    "stripe_secret_key": "REPLACE_WITH_YOUR_STRIPE_SECRET_KEY",
+    "stripe_publishable_key": "REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY",
+    "stripe_webhook_secret": "REPLACE_WITH_YOUR_WEBHOOK_SECRET",
+    "btc_wallet_address": "REPLACE_WITH_YOUR_BITCOIN_ADDRESS",
+    "eth_wallet_address": "REPLACE_WITH_YOUR_ETHEREUM_ADDRESS"
+  },
+  "license": {
+    "key": "",
+    "machine_id": "",
+    "plan": "",
+    "activated_at": ""
+  }
+}
