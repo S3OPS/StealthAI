@@ -5,6 +5,39 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## 🎯 Dual Revenue Streams
+
+1. **Content Revenue**: $310 quick (2-5 days) → $8,700/month sustained
+2. **Software Sales**: $11K-$232K annually through automated licensing
+
+## 🚀 Quick Start
+
+### For Users (Content Generation)
+
+```bash
+# 1. Clone and install
+git clone https://github.com/S3OPS/StealthAI.git
+cd StealthAI
+pip install -r requirements.txt
+
+# 2. Activate your license
+python stealth_ai.py --activate YOUR-LICENSE-KEY
+
+# 3. Configure API keys
+cp config.example.json config.json
+# Edit config.json with your Amazon & YouTube keys
+
+# 4. Run the system
+python stealth_ai.py
+```
+
+### For Developers (Payment System)
+
+```bash
+# Start payment server & landing page
+./start_payment_system.sh
+```
+
 ## 🎯 Revenue Targets
 
 - **Quick Target**: $310 (rapid deployment)
@@ -231,6 +264,50 @@ Topic + Keywords → Signal Compression → AI Script Generation
 - Frequency: Every 2 days
 - Duration: 30-60 days
 - Content: In-depth guides, series
+
+## 💳 Payment System (NEW!)
+
+StealthAI now includes a complete automated payment and licensing system!
+
+### Features
+- **Stripe Integration**: Accept credit cards (FREE tier, no monthly fees)
+- **Cryptocurrency**: Bitcoin & Ethereum payments
+- **Automated Licensing**: Instant license generation via webhooks
+- **Professional Landing Page**: Dark-themed, mobile-responsive
+- **3 Pricing Tiers**: Free trial, Pro ($97/mo), Enterprise ($297/mo)
+
+### Quick Start
+
+1. **Deploy Landing Page** (GitHub Pages, Netlify, Vercel - FREE)
+2. **Deploy API Server** (Railway, Render, Fly.io - FREE)
+3. **Configure Stripe** (Get API keys from dashboard.stripe.com)
+4. **Start Selling!**
+
+### Revenue Potential from Sales
+
+| Scenario | Customers/Month | Revenue/Month | Revenue/Year |
+|----------|-----------------|---------------|--------------|
+| Conservative | 10 | $970 | $11,640 |
+| Moderate | 50 | $4,850 | $58,200 |
+| Aggressive | 200 | $19,400 | $232,800 |
+
+**Total Revenue = Content ($8.7K) + Software Sales ($11K-$232K) = Dual Streams!**
+
+### For End Users
+
+Activate your license:
+```bash
+python stealth_ai.py --activate XXXX-XXXX-XXXX-XXXX
+```
+
+### For Developers
+
+Deploy payment system:
+```bash
+./start_payment_system.sh
+```
+
+📖 **Full Guide**: See [docs/PAYMENT_DEPLOYMENT.md](docs/PAYMENT_DEPLOYMENT.md)
 
 ## 🔒 Security & Privacy
 
