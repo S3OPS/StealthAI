@@ -31,14 +31,14 @@ pip install -q -r requirements.txt
 if [ ! -f ".env" ]; then
     echo "⚠️  No .env file found. Creating from template..."
     cat > .env << EOL
-# Stripe Configuration
-STRIPE_SECRET_KEY=sk_test_your_key_here
-STRIPE_PUBLISHABLE_KEY=pk_test_your_key_here
-STRIPE_WEBHOOK_SECRET=whsec_your_secret_here
+# Stripe Configuration - Get keys from: https://dashboard.stripe.com/apikeys
+STRIPE_SECRET_KEY=REPLACE_WITH_YOUR_STRIPE_SECRET_KEY
+STRIPE_PUBLISHABLE_KEY=REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY
+STRIPE_WEBHOOK_SECRET=REPLACE_WITH_YOUR_WEBHOOK_SECRET
 
 # Cryptocurrency Wallet Addresses
-BTC_WALLET_ADDRESS=your_bitcoin_address
-ETH_WALLET_ADDRESS=your_ethereum_address
+BTC_WALLET_ADDRESS=REPLACE_WITH_YOUR_BITCOIN_ADDRESS
+ETH_WALLET_ADDRESS=REPLACE_WITH_YOUR_ETHEREUM_ADDRESS
 
 # Server Configuration
 API_HOST=0.0.0.0

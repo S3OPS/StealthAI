@@ -17,6 +17,10 @@ class CryptoHandler:
     """
     Handles cryptocurrency payments for StealthAI.
     Supports Bitcoin (BTC) and Ethereum (ETH).
+    
+    NOTE: Conversion rates are example values. In production, implement
+    periodic updates from a crypto price API (e.g., CoinGecko, CoinMarketCap).
+    See update_conversion_rates() method below for integration point.
     """
     
     def __init__(self, btc_address: Optional[str] = None, eth_address: Optional[str] = None):
@@ -30,10 +34,11 @@ class CryptoHandler:
         self.btc_address = btc_address or os.getenv('BTC_WALLET_ADDRESS')
         self.eth_address = eth_address or os.getenv('ETH_WALLET_ADDRESS')
         
-        # USD to crypto conversion rates (would be fetched from API in production)
+        # USD to crypto conversion rates (EXAMPLE VALUES - update from API in production)
+        # TODO: Implement periodic updates from CoinGecko API or similar
         self.conversion_rates = {
-            'BTC': Decimal('45000.00'),  # Example rate
-            'ETH': Decimal('2500.00')     # Example rate
+            'BTC': Decimal('45000.00'),  # Example rate - REPLACE WITH LIVE DATA
+            'ETH': Decimal('2500.00')     # Example rate - REPLACE WITH LIVE DATA
         }
     
     def get_payment_address(self, currency: str) -> Dict[str, Any]:

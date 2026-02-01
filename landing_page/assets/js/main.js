@@ -5,8 +5,10 @@ const API_BASE_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:5000'
     : 'https://api.stealthai.com';  // Update with your deployed API URL
 
-// Initialize Stripe
-const stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY');  // Replace with your actual key
+// IMPORTANT: Replace with your actual Stripe publishable key before deploying!
+// Get your key from: https://dashboard.stripe.com/apikeys
+// Test key format: pk_test_... | Live key format: pk_live_...
+const stripe = Stripe('pk_test_REPLACE_WITH_YOUR_ACTUAL_STRIPE_KEY');  // TODO: REPLACE THIS!
 
 // FAQ Toggle
 function toggleFAQ(element) {

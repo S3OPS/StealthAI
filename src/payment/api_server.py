@@ -20,7 +20,10 @@ logger = logging.getLogger(__name__)
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app)  # Enable CORS for web integration
+
+# CORS Configuration - IMPORTANT: Restrict to your domain in production!
+# For production, use: CORS(app, resources={r"/api/*": {"origins": "https://yourdomain.com"}})
+CORS(app)  # Allow all origins for development only
 
 # Initialize payment handlers
 license_manager = LicenseManager()
@@ -219,11 +222,18 @@ def run_server(host='0.0.0.0', port=5000, debug=False):
     Args:
         host: Host to bind to
         port: Port to listen on
-        debug: Enable debug mode
+        debug: Enable debug mode (DO NOT use in production!)
     """
+    if debug:
+        logger.warning("⚠️  Running in DEBUG mode - DO NOT use in production!")
+    
     logger.info(f"Starting payment API server on {host}:{port}")
     app.run(host=host, port=port, debug=debug)
 
 
 if __name__ == '__main__':
-    run_server(debug=True)
+    # Debug mode is False by default for security
+    # Only enable for local development
+    import os
+    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
+    run_server(debug=debug_mode)

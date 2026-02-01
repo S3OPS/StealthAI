@@ -30,11 +30,11 @@
     "main_target": 8700
   },
   "payment": {
-    "stripe_secret_key": "sk_test_your_stripe_secret_key",
-    "stripe_publishable_key": "pk_test_your_stripe_publishable_key",
-    "stripe_webhook_secret": "whsec_your_webhook_secret",
-    "btc_wallet_address": "your_bitcoin_wallet_address",
-    "eth_wallet_address": "your_ethereum_wallet_address"
+    "stripe_secret_key": "REPLACE_WITH_YOUR_STRIPE_SECRET_KEY",
+    "stripe_publishable_key": "REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY",
+    "stripe_webhook_secret": "REPLACE_WITH_YOUR_WEBHOOK_SECRET",
+    "btc_wallet_address": "REPLACE_WITH_YOUR_BITCOIN_ADDRESS",
+    "eth_wallet_address": "REPLACE_WITH_YOUR_ETHEREUM_ADDRESS"
   },
   "license": {
     "key": "",
