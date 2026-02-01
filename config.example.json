@@ -28,5 +28,18 @@
   "revenue_targets": {
     "quick_target": 310,
     "main_target": 8700
+  },
+  "payment": {
+    "stripe_secret_key": "sk_test_your_stripe_secret_key",
+    "stripe_publishable_key": "pk_test_your_stripe_publishable_key",
+    "stripe_webhook_secret": "whsec_your_webhook_secret",
+    "btc_wallet_address": "your_bitcoin_wallet_address",
+    "eth_wallet_address": "your_ethereum_wallet_address"
+  },
+  "license": {
+    "key": "",
+    "machine_id": "",
+    "plan": "",
+    "activated_at": ""
   }
 }

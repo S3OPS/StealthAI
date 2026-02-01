@@ -19,6 +19,14 @@ from ai_engine import AIEngine
 from integrations import AmazonAffiliate, YouTubeAutomation
 from analytics import RevenueTracker, RevenueMetric
 
+# Payment system integration
+try:
+    from payment import LicenseManager
+    LICENSE_SYSTEM_AVAILABLE = True
+except ImportError:
+    LICENSE_SYSTEM_AVAILABLE = False
+    logger.warning("License system not available")
+
 # Setup logging
 logging.basicConfig(
     level=logging.INFO,
@@ -36,14 +44,20 @@ class StealthAI:
     Main StealthAI engine - orchestrates the entire automation system.
     """
     
-    def __init__(self, config_path: str = "config.json"):
+    def __init__(self, config_path: str = "config.json", skip_license_check: bool = False):
         """
         Initialize StealthAI system.
         
         Args:
             config_path: Path to configuration file
+            skip_license_check: Skip license validation (for testing)
         """
         self.config = self._load_config(config_path)
+        
+        # Validate license if system is available and not skipped
+        if LICENSE_SYSTEM_AVAILABLE and not skip_license_check:
+            self._validate_license()
+        
         self._initialize_components()
         
     def _load_config(self, config_path: str) -> dict:
@@ -81,6 +95,44 @@ class StealthAI:
                 "main_target": 8700
             }
         }
+    
+    def _validate_license(self):
+        """Validate StealthAI license"""
+        license_key = self.config.get('license', {}).get('key')
+        
+        if not license_key:
+            print("\n⚠️  No license key found!")
+            print("To activate StealthAI, run: python stealth_ai.py --activate YOUR-LICENSE-KEY")
+            print("Or start a free trial at: https://stealthai.com")
+            sys.exit(1)
+        
+        # Validate license
+        license_manager = LicenseManager()
+        machine_id = LicenseManager.generate_machine_id()
+        
+        validation = license_manager.validate_license(license_key, machine_id)
+        
+        if not validation['valid']:
+            print(f"\n❌ License validation failed: {validation['error']}")
+            print("Please contact support or purchase a new license at https://stealthai.com")
+            sys.exit(1)
+        
+        # Check activation
+        license_data = validation['license']
+        activations = license_data.get('activations', [])
+        
+        if machine_id not in activations:
+            # Auto-activate
+            activation = license_manager.activate_license(license_key, machine_id)
+            if not activation.get('success'):
+                print(f"\n❌ License activation failed: {activation.get('error')}")
+                sys.exit(1)
+        
+        # Show license info
+        days_remaining = validation.get('days_remaining', 0)
+        plan = license_data.get('plan', 'unknown')
+        
+        logger.info(f"✓ License valid - {plan.upper()} plan - {days_remaining} days remaining")
     
     def _initialize_components(self):
         """Initialize all system components"""
@@ -366,8 +418,91 @@ class StealthAI:
         self.stacker.shutdown()
 
 
+def activate_license(license_key: str):
+    """
+    Activate StealthAI license on this machine.
+    
+    Args:
+        license_key: License key to activate
+    """
+    if not LICENSE_SYSTEM_AVAILABLE:
+        print("❌ License system not available. Install requirements: pip install -r requirements.txt")
+        return False
+    
+    print(f"\n🔐 Activating StealthAI license...")
+    print(f"License key: {license_key}")
+    
+    # Generate machine ID
+    machine_id = LicenseManager.generate_machine_id()
+    print(f"Machine ID: {machine_id}")
+    
+    # Activate license
+    license_manager = LicenseManager()
+    result = license_manager.activate_license(license_key, machine_id)
+    
+    if not result.get('success') and not result.get('valid'):
+        print(f"\n❌ Activation failed: {result.get('error')}")
+        return False
+    
+    # Save to config
+    config_path = Path(__file__).parent / 'config.json'
+    
+    try:
+        if config_path.exists():
+            with open(config_path, 'r') as f:
+                config = json.load(f)
+        else:
+            # Load default config
+            with open(Path(__file__).parent / 'config.example.json', 'r') as f:
+                config = json.load(f)
+        
+        # Add license info
+        config['license'] = {
+            'key': license_key,
+            'machine_id': machine_id,
+            'plan': result.get('plan', 'unknown'),
+            'activated_at': datetime.now().isoformat()
+        }
+        
+        # Save config
+        with open(config_path, 'w') as f:
+            json.dump(config, f, indent=2)
+        
+        print(f"\n✅ License activated successfully!")
+        print(f"Plan: {result.get('plan', 'Unknown').upper()}")
+        print(f"Expires: {result.get('expires_at', 'Unknown')}")
+        print(f"Activations: {result.get('activations', 0)}/{result.get('max_activations', 1)}")
+        print(f"\nConfiguration saved to: {config_path}")
+        print(f"\n🚀 You can now run: python stealth_ai.py")
+        
+        return True
+        
+    except Exception as e:
+        print(f"\n❌ Error saving configuration: {str(e)}")
+        return False
+
+
 def main():
     """Main execution function"""
+    # Check for CLI arguments
+    if len(sys.argv) > 1:
+        if sys.argv[1] == '--activate' and len(sys.argv) > 2:
+            license_key = sys.argv[2]
+            activate_license(license_key)
+            return
+        elif sys.argv[1] == '--help':
+            print("""
+StealthAI - Faceless Revenue Generation Engine
+
+Usage:
+    python stealth_ai.py                        Run the system
+    python stealth_ai.py --activate LICENSE-KEY  Activate license
+    python stealth_ai.py --help                  Show this help
+
+For more information, visit: https://github.com/S3OPS/StealthAI
+            """)
+            return
+    
     print("""
     ╔═══════════════════════════════════════════════════════════╗
     ║                    STEALTH AI SYSTEM                      ║
@@ -378,7 +513,7 @@ def main():
     ╚═══════════════════════════════════════════════════════════╝
     """)
     
-    # Initialize system
+    # Initialize system (will validate license)
     stealth = StealthAI()
     
     try:

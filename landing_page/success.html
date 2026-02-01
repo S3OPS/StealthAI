@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - StealthAI</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container" style="text-align: center; padding: 6rem 2rem;">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <div style="font-size: 4rem; margin-bottom: 2rem;">✅</div>
+            <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Payment Successful!</h1>
+            <p style="color: var(--text-secondary); font-size: 1.25rem; margin-bottom: 3rem;">
+                Your StealthAI license has been activated.
+            </p>
+            
+            <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 2rem; margin-bottom: 2rem;">
+                <h2 style="margin-bottom: 1rem;">Your License Key</h2>
+                <div id="licenseKey" style="font-family: monospace; font-size: 1.5rem; padding: 1rem; background: var(--bg-dark); border-radius: 0.5rem; margin-bottom: 1rem;">
+                    Loading...
+                </div>
+                <button onclick="copyLicenseKey()" class="btn btn-secondary">Copy License Key</button>
+            </div>
+            
+            <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 2rem; margin-bottom: 2rem; text-align: left;">
+                <h3 style="margin-bottom: 1rem;">Next Steps:</h3>
+                <ol style="color: var(--text-secondary); line-height: 2;">
+                    <li>Download StealthAI from <a href="https://github.com/S3OPS/StealthAI" style="color: var(--primary-color);">GitHub</a></li>
+                    <li>Install dependencies: <code style="background: var(--bg-dark); padding: 0.25rem 0.5rem; border-radius: 0.25rem;">pip install -r requirements.txt</code></li>
+                    <li>Activate your license: <code style="background: var(--bg-dark); padding: 0.25rem 0.5rem; border-radius: 0.25rem;">python stealth_ai.py --activate YOUR-LICENSE-KEY</code></li>
+                    <li>Configure your API keys (Amazon, YouTube)</li>
+                    <li>Run the system: <code style="background: var(--bg-dark); padding: 0.25rem 0.5rem; border-radius: 0.25rem;">python stealth_ai.py</code></li>
+                </ol>
+            </div>
+            
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                A confirmation email with your license key and setup instructions has been sent to your email address.
+            </p>
+            
+            <div>
+                <a href="https://github.com/S3OPS/StealthAI" class="btn btn-primary">Go to Documentation</a>
+                <a href="index.html" class="btn btn-secondary" style="margin-left: 1rem;">Back to Home</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Extract session ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+        
+        if (sessionId) {
+            // In production, fetch actual license key from backend
+            document.getElementById('licenseKey').textContent = 'XXXX-XXXX-XXXX-XXXX';
+            
+            // Could make API call to get actual license key
+            // fetch(`/api/get-license?session=${sessionId}`)
+            //     .then(r => r.json())
+            //     .then(data => {
+            //         document.getElementById('licenseKey').textContent = data.license_key;
+            //     });
+        }
+        
+        function copyLicenseKey() {
+            const licenseKey = document.getElementById('licenseKey').textContent;
+            navigator.clipboard.writeText(licenseKey).then(() => {
+                alert('License key copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>
