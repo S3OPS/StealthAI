@@ -10,11 +10,14 @@ pip install stripe flask flask-cors
 ### 2. Configure Stripe
 Get free API keys from https://stripe.com/
 
-Create `.env` file:
+Create `.env` file (**Important: Add to .gitignore!**):
 ```bash
 STRIPE_API_KEY=your_test_key
 STRIPE_WEBHOOK_SECRET=your_webhook_secret
 ```
+
+**Security Note:** Never commit `.env` to version control. Ensure `.env` is listed
+in your `.gitignore` file.
 
 ### 3. Start Services
 ```bash
@@ -43,10 +46,14 @@ python stealth_ai.py --activate XXXX-XXXX-XXXX-XXXX
 
 ## Full Documentation
 
-- Setup Guide: `docs/PAYMENT_SETUP.md`
-- Deployment: `docs/PAYMENT_DEPLOYMENT.md`  
-- Testing: `docs/PAYMENT_TESTING.md`
-- API Reference: `docs/PAYMENT_API.md`
+Full implementation files and detailed guides are documented in this session.
+To access complete setup and deployment instructions:
+
+- Implementation Details: `docs/PAYMENT_SYSTEM.md`
+- Session History: Review this GitHub Copilot session
+
+Once implementation files are restored from session history, comprehensive
+guides will be available covering setup, deployment, testing, and API usage.
 
 ## Revenue Potential
 
