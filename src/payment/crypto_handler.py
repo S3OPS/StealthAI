@@ -139,21 +139,28 @@ class CryptoHandler:
         Returns:
             Verification result
         """
-        # Simplified verification - in production would check blockchain
         if not transaction_hash or len(transaction_hash) < 10:
             return {
                 'verified': False,
                 'error': 'Invalid transaction hash'
             }
-        
-        logger.info(f"Verified crypto payment: {payment_id} - {transaction_hash}")
-        
+
+        # SECURITY: on-chain verification is NOT implemented. The previous
+        # version returned verified=True for any string of 10+ characters,
+        # which let the /api/verify-crypto-payment endpoint issue a real
+        # license key for a made-up transaction hash. Fail closed until a
+        # real blockchain lookup (recipient address, amount, confirmations)
+        # is wired in here.
+        logger.warning(
+            f"Rejecting crypto payment {payment_id}: on-chain verification not implemented"
+        )
         return {
-            'verified': True,
+            'verified': False,
             'payment_id': payment_id,
             'transaction_hash': transaction_hash,
-            'confirmations': 0,  # Would be checked on blockchain
-            'status': 'pending'  # Would update as confirmations increase
+            'confirmations': 0,
+            'status': 'unverified',
+            'error': 'On-chain verification not implemented; payment cannot be verified automatically'
         }
     
     def check_confirmation_status(self, transaction_hash: str, currency: str) -> Dict[str, Any]:

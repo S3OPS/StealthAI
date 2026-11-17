@@ -15,9 +15,9 @@ def main():
     print("StealthAI Quick Start Example")
     print("=" * 50)
     
-    # Initialize system
+    # Initialize system (pass --demo to run without a license key)
     print("\n[1] Initializing StealthAI...")
-    stealth = StealthAI()
+    stealth = StealthAI(skip_license_check='--demo' in sys.argv)
     
     # Generate single content package
     print("\n[2] Generating content package...")

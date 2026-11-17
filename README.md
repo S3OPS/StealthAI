@@ -31,6 +31,19 @@ cp config.example.json config.json
 python stealth_ai.py
 ```
 
+#### Demo mode (no license, no credentials)
+
+```bash
+python stealth_ai.py --demo
+```
+
+Demo mode skips the license check and runs the full pipeline end-to-end with
+default/dummy configuration. If no Ollama server is reachable at
+`http://localhost:11434`, content generation degrades gracefully to template
+placeholders — the pipeline, affiliate-link generation, scheduling, and
+analytics all still execute, but the text is not AI-written. The examples work
+the same way: `python examples/quick_start.py --demo`.
+
 ### For Developers (Payment System)
 
 ```bash
@@ -42,6 +55,14 @@ python stealth_ai.py
 
 - **Quick Target**: $310 (rapid deployment)
 - **Main Target**: $8,700 (sustained engine)
+
+> **Status note:** these figures — and the licensing ranges above — are design
+> targets the code measures against, not observed results. This repository has
+> never been run as a live deployment: the YouTube integration prepares
+> metadata locally (it does not upload), the Amazon integration builds
+> affiliate links but does not query the Product Advertising API, and revenue
+> tracking starts empty on every run. Treat the project as a working
+> framework/demo, not a proven income system.
 
 ## 🚀 Features
 

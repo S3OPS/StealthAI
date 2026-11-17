@@ -61,13 +61,26 @@ class StealthAI:
         self._initialize_components()
         
     def _load_config(self, config_path: str) -> dict:
-        """Load configuration from file"""
+        """Load configuration from file, filling any missing keys with defaults"""
         try:
             with open(config_path, 'r') as f:
-                return json.load(f)
+                loaded = json.load(f)
         except FileNotFoundError:
             logger.warning(f"Config file {config_path} not found, using defaults")
             return self._get_default_config()
+        except json.JSONDecodeError as e:
+            logger.warning(f"Config file {config_path} is not valid JSON ({e}), using defaults")
+            return self._get_default_config()
+
+        # Merge the loaded config over the defaults so a partial config.json
+        # (e.g. only a license section) cannot crash component setup with KeyError.
+        config = self._get_default_config()
+        for section, values in loaded.items():
+            if isinstance(values, dict) and isinstance(config.get(section), dict):
+                config[section].update(values)
+            else:
+                config[section] = values
+        return config
     
     def _get_default_config(self) -> dict:
         """Get default configuration"""
@@ -495,13 +508,19 @@ def main():
 StealthAI - Faceless Revenue Generation Engine
 
 Usage:
-    python stealth_ai.py                        Run the system
+    python stealth_ai.py                        Run the system (license required)
+    python stealth_ai.py --demo                 Run in demo mode: no license check,
+                                                no credentials needed. Content falls
+                                                back to templates if no local Ollama
+                                                server is running.
     python stealth_ai.py --activate LICENSE-KEY  Activate license
     python stealth_ai.py --help                  Show this help
 
 For more information, visit: https://github.com/S3OPS/StealthAI
             """)
             return
+
+    demo_mode = '--demo' in sys.argv[1:]
     
     print("""
     ╔═══════════════════════════════════════════════════════════╗
@@ -513,8 +532,13 @@ For more information, visit: https://github.com/S3OPS/StealthAI
     ╚═══════════════════════════════════════════════════════════╝
     """)
     
-    # Initialize system (will validate license)
-    stealth = StealthAI()
+    if demo_mode:
+        print("[*] DEMO MODE: license check skipped. No real credentials are used;")
+        print("    if no Ollama server is reachable, generated content will be")
+        print("    template placeholders rather than AI output.")
+
+    # Initialize system (will validate license unless demo mode)
+    stealth = StealthAI(skip_license_check=demo_mode)
     
     try:
         # Show current status

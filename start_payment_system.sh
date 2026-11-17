@@ -56,8 +56,11 @@ echo ""
 echo "Press Ctrl+C to stop the server"
 echo ""
 
-cd src/payment
-python -m api_server
+# Run from the repo root: api_server.py uses package-relative imports,
+# so it must be launched as part of the src.payment package. The old
+# `cd src/payment && python -m api_server` fails with
+# "attempted relative import with no known parent package".
+python -m src.payment.api_server
 
 # Deactivate virtual environment on exit
 deactivate
