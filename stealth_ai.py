@@ -19,14 +19,6 @@ from ai_engine import AIEngine
 from integrations import AmazonAffiliate, YouTubeAutomation
 from analytics import RevenueTracker, RevenueMetric
 
-# Payment system integration
-try:
-    from payment import LicenseManager
-    LICENSE_SYSTEM_AVAILABLE = True
-except ImportError:
-    LICENSE_SYSTEM_AVAILABLE = False
-    logger.warning("License system not available")
-
 # Setup logging
 logging.basicConfig(
     level=logging.INFO,
@@ -37,6 +29,14 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+# Payment system integration
+try:
+    from payment import LicenseManager
+    LICENSE_SYSTEM_AVAILABLE = True
+except ImportError:
+    LICENSE_SYSTEM_AVAILABLE = False
+    logger.warning("License system not available")
 
 
 class StealthAI:
